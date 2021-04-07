@@ -20,4 +20,24 @@ module.exports = {
       }
     });
   },
+  get: (date) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let quizzes = await db
+          .get()
+          .collection(QUIZ)
+          .find({
+            created_at: {
+              $gt: date
+                ? new Date(new Date(date).setHours(0, 0, 0, 0))
+                : new Date(new Date().setHours(0, 0, 0, 0)),
+            },
+          })
+          .toArray();
+        resolve(quizzes);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
 };

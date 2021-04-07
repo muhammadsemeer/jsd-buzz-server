@@ -19,4 +19,16 @@ router.post("/", (req, res) => {
     });
 });
 
+router.get("/", (req, res) => {
+  quizHelper
+    .get(req.query ? req.query.date : null)
+    .then((quizzes) => {
+      res.json(quizzes);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;
