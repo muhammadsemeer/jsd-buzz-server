@@ -12,4 +12,15 @@ router.get("/", (req, res) => {
     });
 });
 
+router.post("/", (req, res) => {
+  userHelpers
+    .create(req.body)
+    .then((user) => {
+      res.status(201).json(user);
+    })
+    .catch((code) => {
+      res.sendStatus(code);
+    });
+});
+
 module.exports = router;
