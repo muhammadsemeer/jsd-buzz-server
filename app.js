@@ -15,10 +15,19 @@ app.set("port", port);
 const server = http.createServer(app);
 
 // Middilewares
+app.use(helmet());
+const whitelist = ["http://locahost:3000", "http://localhost:3001"];
 app.use(
-  helmet()
+  cors({
+    origin: (origin, callback) => {
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Origin Not Allowed By CORS"));
+      }
+    },
+  })
 );
-app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
