@@ -5,6 +5,7 @@ module.exports = {
   create: (quiz) => {
     return new Promise((resolve, reject) => {
       try {
+        quiz.created_at = new Date();
         db.get()
           .collection(QUIZ)
           .insertOne(quiz)
