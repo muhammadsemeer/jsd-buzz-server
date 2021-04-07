@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const db = require("../config/connection"),
   { QUIZ } = require("../config/collection");
 
@@ -35,6 +36,33 @@ module.exports = {
           })
           .toArray();
         resolve(quizzes);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
+  update: (id, quiz) => {
+    return new Promise((resolve, reject) => {
+      try {
+        db.get()
+          .collection(QUIZ)
+          .updateOne(
+            { _id: ObjectId(id) },
+            {
+              $set: {
+                question: quiz.question,
+                answerOptions: quiz.answerOptions,
+              },
+            }
+          )
+          .then(async (response) => {
+            let updated = await db
+              .get()
+              .collection(QUIZ)
+              .findOne({ _id: ObjectId(id) });
+            resolve(updated);
+          })
+          .catch((err) => reject(err));
       } catch (error) {
         reject(error);
       }

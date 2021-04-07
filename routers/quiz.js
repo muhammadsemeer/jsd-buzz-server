@@ -31,4 +31,16 @@ router.get("/", (req, res) => {
     });
 });
 
+router.put("/:id", (req, res) => {
+  quizHelper
+    .update(req.params.id, req.body)
+    .then((updated) => {
+      res.json(updated);
+    })
+    .catch((error) => {
+        console.log(error);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;
