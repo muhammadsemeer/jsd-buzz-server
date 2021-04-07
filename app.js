@@ -3,7 +3,9 @@ const express = require("express"),
   app = express(),
   http = require("http"),
   logger = require("morgan"),
-  db = require("./config/connection");
+  db = require("./config/connection"),
+  cors = require("cors"),
+  helmet = require("helmet");
 
 // Server Port Setting
 const port = process.env.PORT || 3001;
@@ -13,6 +15,10 @@ app.set("port", port);
 const server = http.createServer(app);
 
 // Middilewares
+app.use(
+  helmet()
+);
+app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
