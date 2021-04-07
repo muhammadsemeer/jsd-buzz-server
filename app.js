@@ -23,6 +23,10 @@ db.connect((error) => {
   console.log("Database Connected");
 });
 
+// Routers
+
+app.use("/quiz", require("./routers/quiz"));
+
 // Server Listen
 server.listen(port);
 server.on("listening", () => {
