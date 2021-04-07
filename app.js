@@ -27,6 +27,7 @@ db.connect((error) => {
 
 app.use("/user", require("./routers/user"));
 app.use("/quiz", require("./routers/quiz"));
+app.use("/score", require("./routers/score"));
 
 // Server Listen
 server.listen(port);
