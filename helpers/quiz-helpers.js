@@ -7,6 +7,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       try {
         quiz.created_at = new Date();
+        quiz.isActive = true;
         db.get()
           .collection(QUIZ)
           .insertOne(quiz)
@@ -28,11 +29,18 @@ module.exports = {
           .get()
           .collection(QUIZ)
           .find({
-            created_at: {
-              $gt: date
-                ? new Date(new Date(date).setHours(0, 0, 0, 0))
-                : new Date(new Date().setHours(0, 0, 0, 0)),
-            },
+            $and: [
+              {
+                created_at: {
+                  $gt: date
+                    ? new Date(new Date(date).setHours(0, 0, 0, 0))
+                    : new Date(new Date().setHours(0, 0, 0, 0)),
+                },
+              },
+              {
+                isActive: true,
+              },
+            ],
           })
           .toArray();
         resolve(quizzes);
