@@ -38,9 +38,16 @@ router.put("/:id", (req, res) => {
       res.json(updated);
     })
     .catch((error) => {
-        console.log(error);
+      console.log(error);
       res.sendStatus(500);
     });
+});
+
+router.delete("/:id", (req, res) => {
+  quizHelper
+    .delete(req.params.id)
+    .then((response) => res.sendStatus(200))
+    .catch((err) => res.sendStatus(500));
 });
 
 module.exports = router;

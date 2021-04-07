@@ -76,4 +76,26 @@ module.exports = {
       }
     });
   },
+  delete: (id) => {
+    return new Promise((resolve, reject) => {
+      try {
+        db.get()
+          .collection(QUIZ)
+          .updateOne(
+            { _id: ObjectId(id) },
+            {
+              $set: {
+                isActive: false,
+              },
+            }
+          )
+          .then((response) => {
+            resolve();
+          })
+          .catch((err) => reject(err));
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
 };
