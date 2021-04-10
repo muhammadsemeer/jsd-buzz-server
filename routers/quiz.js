@@ -65,9 +65,20 @@ router.post("/check-answered", (req, res) => {
   quizHelper
     .isAnswered(req.query.date, req.body.user)
     .then((answer) => {
-        res.json(answer);
+      res.json(answer);
     })
     .catch((error) => {
+      res.sendStatus(500);
+    });
+});
+
+router.get("/stats", async (req, res) => {
+  quizHelper
+    .getStats(await quizHelper.get(req.query.date))
+    .then((stats) => {
+      res.json(stats);
+    })
+    .catch((err) => {
       res.sendStatus(500);
     });
 });

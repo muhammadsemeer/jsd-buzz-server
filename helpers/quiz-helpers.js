@@ -135,7 +135,6 @@ module.exports = {
   isAnswered: (date, user) => {
     return new Promise(async (resolve, reject) => {
       try {
-        console.log(user);
         let answered = await db
           .get()
           .collection(QUIZ)
@@ -167,6 +166,27 @@ module.exports = {
         resolve(answered.answers.find((value) => value.answered_by === user));
       } catch (error) {
         reject(error);
+      }
+    });
+  },
+  getStats: (quiz) => {
+    return new Promise((resolve, reject) => {
+      try {
+        let totalAnswers = quiz[0].answers.length;
+        let optionA = quiz[0].answers.filter((value) => value.option === "0")
+          .length;
+        let optionB = quiz[0].answers.filter((value) => value.option === "1")
+          .length;
+        let optionC = quiz[0].answers.filter((value) => value.option === "2")
+          .length;
+        let optionD = quiz[0].answers.filter((value) => value.option === "3")
+          .length;
+        resolve({
+          totalAnswers,
+          options: [optionA, optionB, optionC, optionD],
+        });
+      } catch (error) {
+        reject();
       }
     });
   },
