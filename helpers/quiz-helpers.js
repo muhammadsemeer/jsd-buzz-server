@@ -135,33 +135,36 @@ module.exports = {
   isAnswered: (date, user) => {
     return new Promise(async (resolve, reject) => {
       try {
+        console.log(user);
         let answered = await db
           .get()
           .collection(QUIZ)
-          .find({
+          .findOne({
             $and: [
               {
                 created_at: {
                   $gt: date
-                    ? new Date(new Date(date).setHours(0, 0, 0, 0))
-                    : new Date(new Date().setHours(0, 0, 0, 0)),
+                    ? new Date(new Date(date).setHours(12, 0, 0, 0))
+                    : new Date(new Date().setHours(12, 0, 0, 0)),
+                  $lt: date
+                    ? new Date(
+                        new Date(
+                          new Date(date).setDate(new Date(date).getDate() + 1)
+                        ).setHours(0)
+                      )
+                    : new Date(
+                        new Date(
+                          new Date().setDate(new Date().getDate() + 1)
+                        ).setHours(0)
+                      ),
                 },
               },
               {
-                answers: { $elemMatch: { answered_by: user } },
+                isActive: true,
               },
             ],
-          })
-          .project({
-            _id: 0,
-            answers: 1,
-          })
-          .toArray();
-        if (answered.length !== 0) {
-          resolve(answered[0].answers[0]);
-        } else {
-          resolve();
-        }
+          });
+        resolve(answered.answers.find((value) => value.answered_by === user));
       } catch (error) {
         reject(error);
       }
