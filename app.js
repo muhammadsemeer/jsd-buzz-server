@@ -16,7 +16,7 @@ const server = http.createServer(app);
 
 // Middilewares
 app.use(helmet());
-const whitelist = ["http://locahost:3000", "http://localhost:3001"];
+const whitelist = ["http://localhost:3000", "http://localhost:3001"];
 app.use(
   cors({
     origin: (origin, callback) => {
