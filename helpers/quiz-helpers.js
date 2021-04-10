@@ -8,6 +8,7 @@ module.exports = {
       try {
         quiz.created_at = new Date();
         quiz.isActive = true;
+        quiz.answers = [];
         db.get()
           .collection(QUIZ)
           .insertOne(quiz)
