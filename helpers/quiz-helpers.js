@@ -121,4 +121,39 @@ module.exports = {
       }
     });
   },
+  isAnswered: (date, user) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let answered = await db
+          .get()
+          .collection(QUIZ)
+          .find({
+            $and: [
+              {
+                created_at: {
+                  $gt: date
+                    ? new Date(new Date(date).setHours(0, 0, 0, 0))
+                    : new Date(new Date().setHours(0, 0, 0, 0)),
+                },
+              },
+              {
+                answers: { $elemMatch: { answered_by: user } },
+              },
+            ],
+          })
+          .project({
+            _id: 0,
+            answers: 1,
+          })
+          .toArray();
+        if (answered.length !== 0) {
+          resolve(answered[0].answers[0]);
+        } else {
+          resolve();
+        }
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
 };

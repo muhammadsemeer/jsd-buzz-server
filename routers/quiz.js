@@ -51,11 +51,25 @@ router.delete("/:id", (req, res) => {
 });
 
 router.patch("/answer/:id", (req, res) => {
-  quizHelper.addAnswer(req.params.id, req.body).then(()=>{
-    res.sendStatus(200)
-  }).catch(()=>{
-    res.sendStatus(500)
-  })
+  quizHelper
+    .addAnswer(req.params.id, req.body)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch(() => {
+      res.sendStatus(500);
+    });
+});
+
+router.post("/check-answered", (req, res) => {
+  quizHelper
+    .isAnswered(req.query.date, req.body.user)
+    .then((answer) => {
+        res.json(answer);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+    });
 });
 
 module.exports = router;
