@@ -99,4 +99,26 @@ module.exports = {
       }
     });
   },
+  addAnswer: (id, answer) => {
+    return new Promise((resolve, reject) => {
+      try {
+        db.get()
+          .collection(QUIZ)
+          .updateOne(
+            { _id: ObjectId(id) },
+            {
+              $push: { answers: answer },
+            }
+          )
+          .then(() => {
+            resolve();
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
 };

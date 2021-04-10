@@ -50,4 +50,12 @@ router.delete("/:id", (req, res) => {
     .catch((err) => res.sendStatus(500));
 });
 
+router.patch("/answer/:id", (req, res) => {
+  quizHelper.addAnswer(req.params.id, req.body).then(()=>{
+    res.sendStatus(200)
+  }).catch(()=>{
+    res.sendStatus(500)
+  })
+});
+
 module.exports = router;
