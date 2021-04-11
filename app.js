@@ -5,7 +5,8 @@ const express = require("express"),
   logger = require("morgan"),
   db = require("./config/connection"),
   cors = require("cors"),
-  helmet = require("helmet");
+  helmet = require("helmet"),
+  cookieParser = require("cookie-parser");
 
 // Server Port Setting
 const port = process.env.PORT || 3001;
@@ -31,6 +32,7 @@ app.use(
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 // Database Connetcion
 db.connect((error) => {
@@ -41,6 +43,7 @@ db.connect((error) => {
 // Routers
 
 app.use("/quiz", require("./routers/quiz"));
+app.use("/auth", require("./routers/auth"));
 
 // Server Listen
 server.listen(port);
