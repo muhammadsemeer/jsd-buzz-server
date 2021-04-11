@@ -1,7 +1,8 @@
 const router = require("express").Router(),
-  quizHelper = require("../helpers/quiz-helpers");
+  quizHelper = require("../helpers/quiz-helpers"),
+  { verifyAdmin } = require("../middlewares/admin.auth");
 
-router.post("/", (req, res) => {
+router.post("/", verifyAdmin, (req, res) => {
   if (
     req.body &&
     Object.keys(req.body).length === 0 &&
@@ -31,7 +32,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", verifyAdmin, (req, res) => {
   quizHelper
     .update(req.params.id, req.body)
     .then((updated) => {
@@ -43,7 +44,7 @@ router.put("/:id", (req, res) => {
     });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", verifyAdmin, (req, res) => {
   quizHelper
     .delete(req.params.id)
     .then((response) => res.sendStatus(200))

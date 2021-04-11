@@ -8,4 +8,13 @@ module.exports = {
     });
     return token;
   },
+  verify: (token, callback) => {
+    jwt.verify(token, process.env.JWT_SECERT, (error, decoded) => {
+      if (error) {
+        callback(error);
+      } else {
+        callback(null, decoded);
+      }
+    });
+  },
 };
