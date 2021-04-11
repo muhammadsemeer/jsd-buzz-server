@@ -27,6 +27,7 @@ app.use(
         callback(new Error("Origin Not Allowed By CORS"));
       }
     },
+    credentials: true,
   })
 );
 app.use(logger("dev"));
