@@ -135,19 +135,11 @@ module.exports = {
               {
                 created_at: {
                   $gt: date
-                    ? new Date(new Date(date).setHours(12, 0, 0, 0))
-                    : new Date(new Date().setHours(12, 0, 0, 0)),
+                    ? new Date(new Date(date).setHours(0, 0, 0, 0))
+                    : new Date(new Date().setHours(0, 0, 0, 0)),
                   $lt: date
-                    ? new Date(
-                        new Date(
-                          new Date(date).setDate(new Date(date).getDate() + 1)
-                        ).setHours(0)
-                      )
-                    : new Date(
-                        new Date(
-                          new Date().setDate(new Date().getDate() + 1)
-                        ).setHours(0)
-                      ),
+                    ? new Date(new Date(date).setHours(24, 0, 0, 0))
+                    : new Date(new Date().setHours(24, 0, 0, 0)),
                 },
               },
               {
