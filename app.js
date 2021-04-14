@@ -17,17 +17,11 @@ const server = http.createServer(app);
 
 // Middilewares
 app.use(helmet());
-const whitelist = ["http://localhost:3000", "http://localhost:3001"];
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (whitelist.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error("Origin Not Allowed By CORS"));
-      }
-    },
+    origin: "https://localhost:3000",
     credentials: true,
+    exposedHeaders: ["set-cookie"],
   })
 );
 app.use(logger("dev"));
