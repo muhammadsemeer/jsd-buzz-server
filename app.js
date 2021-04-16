@@ -19,7 +19,7 @@ const server = http.createServer(app);
 app.use(helmet());
 app.use(
   cors({
-    origin: "https://localhost:3000",
+    origin: "http://localhost:3000",
     credentials: true,
     exposedHeaders: ["set-cookie"],
   })
@@ -39,6 +39,7 @@ db.connect((error) => {
 
 app.use("/quiz", require("./routers/quiz"));
 app.use("/auth", require("./routers/auth"));
+app.use("/leaderboard", require("./routers/leaderboard"));
 
 // Server Listen
 server.listen(port);
