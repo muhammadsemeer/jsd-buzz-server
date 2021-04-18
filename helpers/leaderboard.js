@@ -30,9 +30,9 @@ module.exports = {
             }
           });
         });
-        let sortedUsers = users.sort((a,b) => {
-            return b.point - a.point
-        })
+        let sortedUsers = users.sort((a, b) => {
+          return b.point - a.point;
+        });
         resolve(sortedUsers);
       } catch (error) {
         reject(error);
