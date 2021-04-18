@@ -33,8 +33,15 @@ module.exports = {
         let sortedUsers = users.sort((a, b) => {
           return b.point - a.point;
         });
+        let a1 = sortedUsers.findIndex((value) => value.name === "Soorya Kriz");
+        let a2 = sortedUsers.findIndex(
+          (value) => value.name === "Muhammad Semeer"
+        );
+        sortedUsers.splice(a1, 1);
+        sortedUsers.splice(a2, 1);
         resolve(sortedUsers);
       } catch (error) {
+        console.log(error);
         reject(error);
       }
     });
